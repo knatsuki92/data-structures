@@ -25,7 +25,7 @@ var LinkedList = function(){
 
     var headValue = list.head.value;
     list.head = list.head.next;
-    delete list[headValue]; //remove the head Node from the list.
+    delete list[headValue]; //remove the head node from the list.
 
 
     //case: one node in list
