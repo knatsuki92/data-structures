@@ -1,7 +1,6 @@
 
 
 var Graph = function(){
-  this.storage = [];
 };
 
 Graph.prototype.addNode = function(node){
@@ -10,13 +9,12 @@ Graph.prototype.addNode = function(node){
   newNode.edge = [];
 
   this[node] = newNode;
-  this.storage.push(node);
 };
 
 Graph.prototype.contains = function(node){
   var isFound = false;
-  _.each(this.storage, function(item){
-    if (item === node){
+  _.each(this, function(item){
+    if (item.node === node){
       isFound = true;
     }
   });
@@ -29,7 +27,6 @@ Graph.prototype.removeNode = function(node){
       delete this[key];
     }
   }
-  this.storage.splice(this.storage.indexOf(node),1);
 };
 
 Graph.prototype.hasEdge = function(fromNode, toNode){
@@ -55,8 +52,8 @@ Graph.prototype.addEdge = function(fromNode, toNode){
 
 Graph.prototype.removeEdge = function(fromNode, toNode){
   if (this.hasEdge(fromNode,toNode)){
-    this[fromNode].splice(this[fromNode].edge.indexOf(this[toNode]),1);
-    this[toNode].splice(this[toNode].edge.indexOf(this[fromNode]),1);
+    this[fromNode].edge.splice(this[fromNode].edge.indexOf(this[toNode]),1);
+    this[toNode].edge.splice(this[toNode].edge.indexOf(this[fromNode]),1);
   }
 
 };

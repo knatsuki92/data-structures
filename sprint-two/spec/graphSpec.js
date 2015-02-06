@@ -40,9 +40,9 @@ describe('graph', function() {
     graph.addNode('apples');
     graph.addNode('satsumas');
     graph.addEdge('satsumas', 'apples');
-    expect(graph.hasEdge('apples', 'satsumas')).to.equal(true);
-    // graph.removeEdge('satsumas', 'apples');
-    // expect(graph.hasEdge('apples', 'satsumas')).to.equal(false);
+    // expect(graph.hasEdge('apples', 'satsumas')).to.equal(true);
+    graph.removeEdge('satsumas', 'apples');
+    expect(graph.hasEdge('apples', 'satsumas')).to.equal(false);
 
 
   });
