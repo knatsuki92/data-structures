@@ -13,19 +13,25 @@ HashTable.prototype.insert = function(k, v){
   if (bucket === undefined){
     bucket = [[k,v]];
   } else {
-    if(this.retrieve(k) === null){
-      bucket.push([k,v]);
+    if(this.retrieve(k) !== null){
+      this.remove(k);
+    }
+    bucket.push([k,v]);
+
+    // if(this.retrieve(k) === null){
+    //   bucket.push([k,v]);
+    // }
+    // this.remove(k);
+    // bucket.push([k,v]);
   }
   this._storage.set(i,bucket);
-
-  });
 };
 
 HashTable.prototype.retrieve = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
   var bucket = this._storage.get(i);
   for (var j = 0; j < bucket.length; j++) {
-    if(bucket[j] !== undefined)
+    if(bucket[j] !== undefined) {
       if(bucket[j][0] === k) {
        return bucket[j][1];
       }
@@ -36,14 +42,18 @@ HashTable.prototype.retrieve = function(k){
 };
 
 HashTable.prototype.remove = function(k){
-  var i = getIndexBelowMaxForKey(k, this._limit);
-  this._storage.each(function(bucket, index, storage){
-    if (index === i){
-      storage[index] = null;
+  if(this.retrieve(k) !== null ){
+    var i = getIndexBelowMaxForKey(k, this._limit);
+    var bucket = this._storage.get(i);
+    for (var j = 0; j < bucket.length; j++) {
+      if(bucket[j][0] === k){
+        bucket.splice(j,1);
+      }
     }
-  });
-
+    this._storage.set(i, bucket);
+  }
 };
+
 
 
 
