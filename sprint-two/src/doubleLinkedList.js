@@ -72,9 +72,9 @@ var LinkedList = function(){
 
     if (list.head === null) {
       list.tail = null;
-    };
-
-    list.head.previous = null;
+    } else {
+      list.head.previous = null;
+    }
 
     return oldHead.value;
 
