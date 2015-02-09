@@ -4,16 +4,16 @@ var LinkedList = function(){
   list.tail = null;
 
   list.addToTail = function(value){
+    //create a new Node
     var newNode = Node(value);
-    if(list.tail !== null ){
-      list.tail.next = newNode;
-    }
-    list.tail = newNode;
-    list[value] = newNode;
-
-    //initial case (empty list)
-    if (list.head === null){
+    //initial case: list.tail === null
+    if (list.tail === null){
+      list.tail = newNode;
       list.head = newNode;
+    } else {
+      list.tail.next = newNode;
+      // console.log(list.tail);
+      list.tail = newNode;
     }
   };
 
@@ -25,8 +25,6 @@ var LinkedList = function(){
 
     var headValue = list.head.value;
     list.head = list.head.next;
-    delete list[headValue]; //remove the head node from the list.
-
 
     //case: one node in list
     if (list.head === null) {
@@ -37,13 +35,25 @@ var LinkedList = function(){
   };
 
   list.contains = function(target){
-    var isFound = false;
-    for (var key in list){
-      if (list[key].value === target) {
-        isFound = true;
+
+    var CrawlThrough = function (node, targ) {
+    // This function crawls through each node until the target is found
+      if(node.value === targ) {
+        return true;
       }
+      else {
+        if (node.next === null){
+          return false;
+        }
+        return CrawlThrough(node.next, targ);
+      }
+    };
+
+    if(list.head !== null){
+      return CrawlThrough(list.head, target);
+    } else {
+      return false;
     }
-    return isFound;
 
   };
 
